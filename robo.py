@@ -12,21 +12,25 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd 
 
+#navegador escolhido
 driver = webdriver.Chrome()
 
+#site que deve entrar 
 driver.get("http://syscassol.cassol.local:8180/cas-syscassol/faces/login.xhtml")
 
 driver.maximize_window()
 
+#campo para entrada de usuario e senha
 email_input = driver.find_element("id", "frmLogin\:loginNome")
-email_input.send_keys("maria.alves")
+email_input.send_keys("nome.login")
 password_input = driver.find_element("id", "frmLogin\:loginSenha")
-password_input.send_keys("M@ria2006")
+password_input.send_keys("senha1234")
 password_input.send_keys(Keys.RETURN)
 sleep(1)
 
 driver.get("http://syscassol.cassol.local:8180/cas-syscassol/faces/pages/logistica/CalculoFrete/CrudCasFreteDesconto.xhtml")
 
+#caminho do arquivo para a leitura das informações no excel
 df = pd.read_excel(r"C:\Users\maria.alves\Desktop\robo.xlsx", sheet_name='Plan2')
 
 for i, row in df.iterrows():
@@ -46,6 +50,7 @@ for i, row in df.iterrows():
     input_pedido.clear()
     input_pedido.send_keys(pedido)
 
+    #caminho para o botão
     botao_pesquisa = driver.find_element('xpath','//*[@id="form:j_idt48"]/span')
     botao_pesquisa.click()
 
